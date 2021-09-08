@@ -9,6 +9,50 @@ tags:
   - account
 versions:
   - platforms: []
+    providers:
+      - name: ibm
+        source: "ibm-cloud/ibm"
+    dependencies:
+      - id: resource_group
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
+        optional: true
+    variables:
+      - name: resource_group_name
+        alias: name
+        scope: module
+        type: string
+        description: The name of the resource group
+      - name: ibmcloud_api_key
+        scope: global
+        type: string
+        description: The IBM Cloud api token
+      - name: sync
+        moduleRef:
+          id: resource_group
+          output: sync
+        type: string
+        description: Value used to order the provisioning of the resource group
+        default: ""
+        optional: true
+      - name: provision
+        type: bool
+        description: Flag indicating that the resource group should be created
+        default: true
+        optional: true
+    version: v2.4.0
+    outputs:
+      - name: name
+        description: The name of the resource group
+      - name: id
+        description: The id of the resource group
+      - name: group
+        description: The resource group object
+      - name: provision
+        description: Flag indicating whether the resource group was provisioned
+      - name: sync
+        description: Value used to order the provisioning of the resource group
+  - platforms: []
     dependencies: []
     variables:
       - name: resource_group_name
