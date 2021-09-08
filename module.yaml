@@ -8,10 +8,21 @@ tags:
     - account
 versions:
 - platforms: []
-  dependencies: []
+  providers:
+    - name: ibm
+      source: "ibm-cloud/ibm"
+  dependencies:
+    - id: resource_group
+      refs:
+        - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
+      optional: true
   variables:
     - name: resource_group_name
       alias: name
       scope: module
     - name: ibmcloud_api_key
       scope: global
+    - name: sync
+      moduleRef:
+        id: resource_group
+        output: sync

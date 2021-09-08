@@ -13,3 +13,9 @@ variable "provision" {
   description = "Flag indicating that the resource group should be created"
   default     = true
 }
+
+variable "sync" {
+  type        = string
+  description = "Value used to order the provisioning of the resource group"
+  default     = ""
+}
