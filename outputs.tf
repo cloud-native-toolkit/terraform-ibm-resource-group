@@ -1,7 +1,7 @@
 output "name" {
   description = "The name of the resource group"
   value       = var.resource_group_name
-  depends_on  = [ibm_resource_group.resource_group]
+  depends_on  = [data.ibm_resource_group.resource_group]
 }
 
 output "id" {
@@ -22,5 +22,5 @@ output "provision" {
 output "sync" {
   description = "Value used to order the provisioning of the resource group"
   value       = var.resource_group_name
-  depends_on  = [ibm_resource_group.resource_group]
+  depends_on  = [data.ibm_resource_group.resource_group]
 }
