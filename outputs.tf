@@ -18,3 +18,9 @@ output "provision" {
   description = "Flag indicating whether the resource group was provisioned"
   value       = var.provision
 }
+
+output "sync" {
+  description = "Value used to order the provisioning of the resource group"
+  value       = var.resource_group_name
+  depends_on  = [ibm_resource_group.resource_group]
+}
