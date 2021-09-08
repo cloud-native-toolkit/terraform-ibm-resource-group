@@ -16,6 +16,7 @@ versions:
       refs:
         - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
       optional: true
+      discriminator: no_match
   variables:
     - name: resource_group_name
       alias: name
