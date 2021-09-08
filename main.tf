@@ -13,7 +13,7 @@ resource ibm_resource_group resource_group {
 }
 
 data ibm_resource_group resource_group {
-  depends_on = [ibm_resource_group.resource_group]
+  depends_on = [null_resource.wait_for_sync, ibm_resource_group.resource_group]
 
   name  = var.resource_group_name
 }
