@@ -13,10 +13,9 @@ versions:
       source: "ibm-cloud/ibm"
   dependencies:
     - id: sync
-      refs:
-        - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
+      refs: []
+      interface: github.com/cloud-native-toolkit/garage-terraform-modules#sync
       optional: true
-      discriminator: no_match
   variables:
     - name: resource_group_name
       alias: name
