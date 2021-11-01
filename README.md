@@ -12,15 +12,15 @@ The module depends on the following software components:
 
 ### Terraform providers
 
-- IBM Cloud provider >= 1.5.3
+- IBM Cloud provider >= 1.17.0
 
 ## Example usage
 
 ```hcl-terraform
 module "resource_groups" {
-  source = "github.com/ibm-garage-cloud/terraform-ibm-resource-group.git"
+  source = "github.com/cloud-native-toolkit/terraform-ibm-resource-group.git?ref=v2.2.1"
 
-  resource_group_name = var .resource_group_name
+  resource_group_name = var.resource_group_name
+  ibmcloud_api_key    = var.ibmcloud_api_key
 }
 ```
-
