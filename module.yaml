@@ -2,6 +2,8 @@ name: ibm-resource-group
 alias: resource_group
 type: terraform
 description: "Creates a resource groups in the account"
+interfaces:
+  - github.com/cloud-native-toolkit/automation-modules#sync
 tags:
     - ibm cloud
     - resource group
@@ -14,7 +16,7 @@ versions:
   dependencies:
     - id: sync
       refs: []
-      interface: github.com/cloud-native-toolkit/garage-terraform-modules#sync
+      interface: github.com/cloud-native-toolkit/automation-modules#sync
       optional: true
   variables:
     - name: resource_group_name
