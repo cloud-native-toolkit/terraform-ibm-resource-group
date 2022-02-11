@@ -2,7 +2,7 @@ id: github.com/cloud-native-toolkit/terraform-ibm-resource-group
 name: ibm-resource-group
 alias: resource_group
 type: terraform
-description: "Creates a resource groups in the account"
+description: Creates a resource groups in the account
 tags:
   - ibm cloud
   - resource group
@@ -11,7 +11,45 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
+    dependencies:
+      - id: sync
+        refs: []
+        interface: github.com/cloud-native-toolkit/automation-modules#sync
+        optional: true
+    variables:
+      - name: resource_group_name
+        type: string
+        description: The name of the resource group
+        alias: name
+        scope: module
+      - name: provision
+        type: bool
+        description: Flag indicating that the resource group should be created
+        default: true
+      - name: sync
+        type: string
+        description: Value used to order the provisioning of the resource group
+        default: ''
+        moduleRef:
+          id: sync
+          output: sync
+    version: v3.0.2
+    outputs:
+      - name: name
+        description: The name of the resource group
+      - name: id
+        description: The id of the resource group
+      - name: group
+        description: The resource group object
+      - name: provision
+        description: Flag indicating whether the resource group was provisioned
+      - name: sync
+        description: Value used to order the provisioning of the resource group
+  - platforms: []
+    providers:
+      - name: ibm
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs: []
@@ -29,7 +67,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -51,7 +89,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs: []
@@ -69,7 +107,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -91,7 +129,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs: []
@@ -113,7 +151,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -135,7 +173,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs: []
@@ -157,7 +195,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -179,7 +217,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs:
@@ -202,7 +240,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -224,7 +262,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs:
@@ -247,7 +285,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -269,7 +307,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs:
@@ -292,7 +330,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -314,7 +352,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs:
@@ -337,7 +375,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -359,7 +397,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: sync
         refs:
@@ -381,7 +419,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -403,7 +441,7 @@ versions:
   - platforms: []
     providers:
       - name: ibm
-        source: "ibm-cloud/ibm"
+        source: ibm-cloud/ibm
     dependencies:
       - id: resource_group
         refs:
@@ -425,7 +463,7 @@ versions:
           output: sync
         type: string
         description: Value used to order the provisioning of the resource group
-        default: ""
+        default: ''
         optional: true
       - name: provision
         type: bool
@@ -562,7 +600,10 @@ versions:
         description: The resource group object
   - platforms: []
     dependencies: []
-    variables: [{name: names, type: list(string), description: List of resource group names that should be created}]
+    variables:
+      - name: names
+        type: list(string)
+        description: List of resource group names that should be created
     version: v2.0.0
     outputs:
       - name: names
@@ -573,7 +614,10 @@ versions:
         description: List of group names and ids
   - platforms: []
     dependencies: []
-    variables: [{name: names, type: list(string), description: List of resource group names that should be created}]
+    variables:
+      - name: names
+        type: list(string)
+        description: List of resource group names that should be created
     version: v1.4.1
     outputs:
       - name: names
@@ -584,7 +628,10 @@ versions:
         description: List of group names and ids
   - platforms: []
     dependencies: []
-    variables: [{name: names, type: list(string), description: List of resource group names that should be created}]
+    variables:
+      - name: names
+        type: list(string)
+        description: List of resource group names that should be created
     version: v1.4.0
     outputs:
       - name: names
@@ -595,7 +642,10 @@ versions:
         description: List of group names and ids
   - platforms: []
     dependencies: []
-    variables: [{name: resourceGroupNames, type: string, description: Comma-separated list of resource group names that should be created}]
+    variables:
+      - name: resourceGroupNames
+        type: string
+        description: Comma-separated list of resource group names that should be created
     version: v1.3.0
     outputs:
       - name: names
@@ -606,7 +656,10 @@ versions:
         description: List of group names and ids
   - platforms: []
     dependencies: []
-    variables: [{name: resourceGroupNames, type: string, description: Comma-separated list of resource group names that should be created}]
+    variables:
+      - name: resourceGroupNames
+        type: string
+        description: Comma-separated list of resource group names that should be created
     version: v1.2.0
     outputs:
       - name: names
@@ -615,14 +668,20 @@ versions:
         description: List of ids of generated resource groups
   - platforms: []
     dependencies: []
-    variables: [{name: resourceGroupNames, type: string, description: Comma-separated list of resource group names that should be created}]
+    variables:
+      - name: resourceGroupNames
+        type: string
+        description: Comma-separated list of resource group names that should be created
     version: v1.1.0
     outputs:
       - name: resourceGroupNames
         description: List of resource group names
   - platforms: []
     dependencies: []
-    variables: [{name: resourceGroupNames, type: string, description: Comma-separated list of resource group names that should be created}]
+    variables:
+      - name: resourceGroupNames
+        type: string
+        description: Comma-separated list of resource group names that should be created
     version: v1.0.0
     outputs:
       - name: resourceGroupNames
@@ -632,21 +691,21 @@ versions:
       - ocp3
       - ocp4
     dependencies: []
-    #    - id: cluster
-    #      refs:
-    #        - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
-    #          version: ">= 1.7.0"
-    #        - source: github.com/ibm-garage-cloud/terraform-k8s-ocp-cluster
-    #          version: ">= 2.0.0"
-    #    - id: namespace
-    #      refs:
-    #        - source: github.com/ibm-garage-cloud/terraform-k8s-namespace
-    #          version: ">= 2.1.0"
-    #    - id: dashboard
-    #      refs:
-    #        - source: github.com/ibm-garage-cloud/terraform-k8s-dashboard
-    #          version: ">= 1.6.0"
-    variables: [{name: variable "my, type: variable "my, description: variable "my}, {name: 'variable" { #  type        = string #  description = "A description of my', type: string, description: 'variable" { #  type        = string #  description = "A description of my'}, {name: 'variable" #  default     = "" #}', type: 'variable" #  default     = "" #}', description: 'variable" #  default     = "" #}', optional: true}]
+    variables:
+      - name: variable "my
+        type: variable "my
+        description: variable "my
+      - name: >-
+          variable" { #  type        = string #  description = "A description of
+          my
+        type: string
+        description: >-
+          variable" { #  type        = string #  description = "A description of
+          my
+      - name: 'variable" #  default     = "" #}'
+        type: 'variable" #  default     = "" #}'
+        description: 'variable" #  default     = "" #}'
+        optional: true
     version: v0.0.0
     outputs:
       - name: output "my
@@ -655,3 +714,5 @@ versions:
         description: 'output" { #  description = "Description of my'
       - name: 'output" #  value       = "value" #  depends_on  = [<some resource>] #}'
         description: 'output" #  value       = "value" #  depends_on  = [<some resource>] #}'
+interfaces:
+  - github.com/cloud-native-toolkit/automation-modules#sync
