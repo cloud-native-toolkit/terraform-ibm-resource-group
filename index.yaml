@@ -16,6 +16,45 @@ versions:
       - id: sync
         refs: []
         interface: github.com/cloud-native-toolkit/automation-modules#sync
+        manualResolution: true
+        optional: true
+    variables:
+      - name: resource_group_name
+        type: string
+        description: The name of the resource group
+        alias: name
+        scope: module
+      - name: provision
+        type: bool
+        description: Flag indicating that the resource group should be created
+        default: true
+      - name: sync
+        type: string
+        description: Value used to order the provisioning of the resource group
+        default: ''
+        moduleRef:
+          id: sync
+          output: sync
+    version: v3.0.3
+    outputs:
+      - name: name
+        description: The name of the resource group
+      - name: id
+        description: The id of the resource group
+      - name: group
+        description: The resource group object
+      - name: provision
+        description: Flag indicating whether the resource group was provisioned
+      - name: sync
+        description: Value used to order the provisioning of the resource group
+  - platforms: []
+    providers:
+      - name: ibm
+        source: ibm-cloud/ibm
+    dependencies:
+      - id: sync
+        refs: []
+        interface: github.com/cloud-native-toolkit/automation-modules#sync
         optional: true
     variables:
       - name: resource_group_name
