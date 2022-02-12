@@ -17,6 +17,7 @@ versions:
     - id: sync
       refs: []
       interface: github.com/cloud-native-toolkit/automation-modules#sync
+      manualResolution: true
       optional: true
   variables:
     - name: resource_group_name
