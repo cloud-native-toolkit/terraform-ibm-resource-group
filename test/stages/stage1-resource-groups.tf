@@ -14,3 +14,9 @@ module "resource_group2" {
   sync                = module.resource_group1.sync
   enabled             = var.enabled
 }
+
+resource null_resource print_enabled {
+  provisioner "local-exec" {
+    command = "echo -n '${module.resource_group1.enabled}' > .enabled"
+  }
+}
