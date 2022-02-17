@@ -6,13 +6,14 @@ resource null_resource wait_for_sync {
 }
 
 resource ibm_resource_group resource_group {
-  count = var.provision ? 1 : 0
+  count = var.provision && var.enabled ? 1 : 0
   depends_on = [null_resource.wait_for_sync]
 
   name  = var.resource_group_name
 }
 
 data ibm_resource_group resource_group {
+  cound = var.enabled ? 1 : 0
   depends_on = [null_resource.wait_for_sync, ibm_resource_group.resource_group]
 
   name  = var.resource_group_name

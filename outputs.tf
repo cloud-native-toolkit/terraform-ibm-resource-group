@@ -6,12 +6,12 @@ output "name" {
 
 output "id" {
   description = "The id of the resource group"
-  value       = data.ibm_resource_group.resource_group.id
+  value       = length(data.ibm_resource_group.resource_group) > 0 ? data.ibm_resource_group.resource_group[0].id : ""
 }
 
 output "group" {
   description = "The resource group object"
-  value       = data.ibm_resource_group.resource_group
+  value       = length(data.ibm_resource_group.resource_group) > 0 ? data.ibm_resource_group.resource_group[0] : {}
 }
 
 output "provision" {
