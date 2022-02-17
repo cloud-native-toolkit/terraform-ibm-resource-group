@@ -14,3 +14,9 @@ variable "sync" {
   description = "Value used to order the provisioning of the resource group"
   default     = ""
 }
+
+variable "enabled" {
+  type        = bool
+  description = "Flag indicating that the module should perform its function. If enabled is false this module won't do anything."
+  default     = true
+}
