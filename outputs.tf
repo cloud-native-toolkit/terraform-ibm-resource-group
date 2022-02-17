@@ -24,3 +24,7 @@ output "sync" {
   value       = var.resource_group_name
   depends_on  = [data.ibm_resource_group.resource_group]
 }
+
+output "enabled" {
+  value = var.enabled
+}
