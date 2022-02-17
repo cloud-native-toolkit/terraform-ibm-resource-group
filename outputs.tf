@@ -11,7 +11,7 @@ output "id" {
 
 output "group" {
   description = "The resource group object"
-  value       = length(data.ibm_resource_group.resource_group) > 0 ? data.ibm_resource_group.resource_group[0] : {}
+  value       = try(length(data.ibm_resource_group.resource_group) > 0 ? data.ibm_resource_group.resource_group[0] : tomap(false), {})
 }
 
 output "provision" {
