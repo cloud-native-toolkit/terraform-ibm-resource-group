@@ -41,6 +41,52 @@ versions:
           Flag indicating that the module should perform its function. If
           enabled is false this module won't do anything.
         default: true
+    version: v3.1.1
+    outputs:
+      - name: name
+        description: The name of the resource group
+      - name: id
+        description: The id of the resource group
+      - name: group
+        description: The resource group object
+      - name: provision
+        description: Flag indicating whether the resource group was provisioned
+      - name: sync
+        description: Value used to order the provisioning of the resource group
+      - name: enabled
+  - platforms: []
+    providers:
+      - name: ibm
+        source: ibm-cloud/ibm
+    dependencies:
+      - id: sync
+        refs: []
+        interface: github.com/cloud-native-toolkit/automation-modules#sync
+        manualResolution: true
+        optional: true
+    variables:
+      - name: resource_group_name
+        type: string
+        description: The name of the resource group
+        alias: name
+        scope: module
+      - name: provision
+        type: bool
+        description: Flag indicating that the resource group should be created
+        default: true
+      - name: sync
+        type: string
+        description: Value used to order the provisioning of the resource group
+        default: ''
+        moduleRef:
+          id: sync
+          output: sync
+      - name: enabled
+        type: bool
+        description: >-
+          Flag indicating that the module should perform its function. If
+          enabled is false this module won't do anything.
+        default: true
     version: v3.1.0
     outputs:
       - name: name
