@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
 
-# verify resource group created?
+RESOURCE_GROUP_NAME=$(cat .rg_name)
 
-
-ENABLED=$(cat .enabled)
-
-if [[ "${ENABLED}" == "false" ]]; then
-  echo "The resource group is not enabled."
+if ! ibmcloud resource group "${RESOURCE_GROUP_NAME}" -q; then
+  echo "Resource group not found: ${RESOURCE_GROUP_NAME}"
+  exit 1
 fi
-
-echo "Terraform state:"
-terraform state list

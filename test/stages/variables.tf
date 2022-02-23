@@ -15,6 +15,3 @@ variable "resource_group_provision" {
   description = "Flag indicating that the resource group should be provisioned"
   default     = true
 }
-
-variable "enabled" {
-}
