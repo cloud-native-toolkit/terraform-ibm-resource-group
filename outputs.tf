@@ -6,12 +6,12 @@ output "name" {
 
 output "id" {
   description = "The id of the resource group"
-  value       = length(data.ibm_resource_group.resource_group) > 0 ? data.ibm_resource_group.resource_group[0].id : ""
+  value       = data.ibm_resource_group.resource_group.id
 }
 
 output "group" {
   description = "The resource group object"
-  value       = try(length(data.ibm_resource_group.resource_group) > 0 ? data.ibm_resource_group.resource_group[0] : tomap(false), {})
+  value       = data.ibm_resource_group.resource_group
 }
 
 output "provision" {
@@ -23,8 +23,4 @@ output "sync" {
   description = "Value used to order the provisioning of the resource group"
   value       = var.resource_group_name
   depends_on  = [data.ibm_resource_group.resource_group]
-}
-
-output "enabled" {
-  value = var.enabled
 }
