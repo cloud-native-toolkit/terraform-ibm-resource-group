@@ -1,4 +1,5 @@
 name: ibm-resource-group
+registryId: cloud-native-toolkit/resource-group/ibm
 alias: resource_group
 type: terraform
 description: "Creates a resource groups in the account"
