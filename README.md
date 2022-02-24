@@ -49,7 +49,7 @@ variable "resource_group_provision" {
 }
 
 module "resource_group" {
-  source = "github.com/cloud-native-toolkit/terraform-ibm-resource-group.git"
+  source = "cloud-native-toolkit/resource-group/ibm"
 
   resource_group_name = var.resource_group_name
   provision           = var.resource_group_provision
