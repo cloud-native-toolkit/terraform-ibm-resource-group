@@ -1,16 +1,24 @@
+module "existing_resource_group" {
+  source = "./module"
+
+  resource_group_name = "Default"
+  ibmcloud_api_key    = var.ibmcloud_api_key
+}
+
 module "resource_group1" {
   source = "./module"
 
   resource_group_name = "test-resource-group1"
-  provision           = var.resource_group_provision
+  ibmcloud_api_key    = var.ibmcloud_api_key
+  sync                = module.existing_resource_group.sync
 }
 
 module "resource_group2" {
   source = "./module"
 
   resource_group_name = "test-resource-group2"
-  provision           = var.resource_group_provision
   sync                = module.resource_group1.sync
+  ibmcloud_api_key    = var.ibmcloud_api_key
 }
 
 resource "null_resource" "print_rg" {
