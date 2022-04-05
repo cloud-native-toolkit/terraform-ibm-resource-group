@@ -37,7 +37,7 @@ if [ "$COUNT" -gt "0" ]; then
   if [[ "$TAGS" == *"$AUTOMATION_TAG"* ]]; then
     echo "Found automation tag: $AUTOMATION_TAG. Deleting resource group $RG_ID..."
 
-    curl -X DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
+    curl -s DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
       --header "Authorization: Bearer $IAM_TOKEN" \
       --header 'Content-Type: application/json'
     echo "Deleted"
