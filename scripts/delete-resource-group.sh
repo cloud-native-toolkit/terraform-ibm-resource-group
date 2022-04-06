@@ -22,7 +22,7 @@ RESULT=$(curl -s --url "https://resource-controller.cloud.ibm.com/v2/resource_gr
 COUNT=$(echo $RESULT | jq '.resources | length' -r)
 
 if [ "$COUNT" -gt "0" ]; then
-  echo "Deleting resource group $RESOURCE_GROUP_NAME..."
+  echo "Found resource group $RESOURCE_GROUP_NAME..."
   RG_ID=$(echo $RESULT | jq '.resources[].id' -r)
   RG_CRN=$(echo $RESULT | jq '.resources[].crn' -r)
   echo "ID: $RG_ID"
@@ -37,7 +37,7 @@ if [ "$COUNT" -gt "0" ]; then
   if [[ "$TAGS" == *"$AUTOMATION_TAG"* ]]; then
     echo "Found automation tag: $AUTOMATION_TAG. Deleting resource group $RG_ID..."
 
-    curl -s DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
+    curl -s -X DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
       --header "Authorization: Bearer $IAM_TOKEN" \
       --header 'Content-Type: application/json'
     echo "Deleted"
@@ -46,10 +46,3 @@ else
   echo "Resource Group Not Found"
   exit 1;
 fi
-
-
-
-######
-# todo: ...
-# label if created by this module, so we know to delete (use cloud tag)
-# also get rid of provision flag
