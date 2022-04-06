@@ -1,4 +1,8 @@
 
+locals {
+  automation_tag = "automation:${random_uuid.tag.result}"
+}
+
 resource null_resource wait_for_sync {
   provisioner "local-exec" {
     command = "echo 'Sync: ${var.sync != null ? var.sync : ""}'"
@@ -18,7 +22,7 @@ resource null_resource resource_group {
   triggers = {
     IBMCLOUD_API_KEY = base64encode(var.ibmcloud_api_key)
     RESOURCE_GROUP_NAME  = var.resource_group_name
-    AUTOMATION_TAG  = "automation:${random_uuid.tag.result}"
+    AUTOMATION_TAG  = local.automation_tag
     BIN_DIR = module.clis.bin_dir
   }
 
@@ -45,10 +49,12 @@ resource null_resource resource_group {
   }
 }
 
-
-
 data ibm_resource_group resource_group {
   depends_on = [null_resource.wait_for_sync, null_resource.resource_group]
 
   name  = var.resource_group_name
+}
+
+data ibm_resource_tag resource_group_tags {
+  resource_id = data.ibm_resource_group.resource_group.crn
 }
