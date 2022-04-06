@@ -19,3 +19,8 @@ output "sync" {
   value       = var.resource_group_name
   depends_on  = [data.ibm_resource_group.resource_group]
 }
+
+output "provision" {
+  description = "Flag indicating that the resource group was provisioned by this module"
+  value       = contains(data.ibm_resource_tag.resource_group_tags.tags, local.automation_tag)
+}

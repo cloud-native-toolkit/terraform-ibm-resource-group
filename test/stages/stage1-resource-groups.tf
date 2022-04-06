@@ -21,8 +21,14 @@ module "resource_group2" {
   ibmcloud_api_key    = var.ibmcloud_api_key
 }
 
-resource "null_resource" "print_rg" {
-  provisioner "local-exec" {
-    command = "echo -n '${module.resource_group2.name}' > .rg_name"
-  }
+resource local_file provision_flag {
+  filename = "${path.cwd}/.provision"
+
+  content = module.resource_group2.provision
+}
+
+resource local_file resource_group_name {
+  filename = "${path.cwd}/.rg_name"
+
+  content = module.resource_group2.name
 }
