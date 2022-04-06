@@ -24,13 +24,13 @@ module "resource_group2" {
 resource local_file tags {
   filename = "${path.cwd}/.tags"
 
-  content = jsonencode(module.resource_group1.tags)
+  content = jsonencode(module.resource_group2.tags)
 }
 
 resource local_file provision_flag {
   filename = "${path.cwd}/.provision"
 
-  content = module.resource_group1.provision
+  content = module.resource_group2.provision
 }
 
 resource local_file resource_group_name {
