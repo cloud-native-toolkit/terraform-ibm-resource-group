@@ -3,6 +3,9 @@
 BIN_DIR=$(cat .bin_dir)
 RESOURCE_GROUP_NAME=$(cat .rg_name)
 PROVISION=$(cat .provision)
+TAGS=$(cat .tags)
+
+echo "Tags: ${TAGS}"
 
 REGION=$(cat terraform.tfvars | grep -E "^region" | sed "s/region=//g" | sed 's/"//g')
 

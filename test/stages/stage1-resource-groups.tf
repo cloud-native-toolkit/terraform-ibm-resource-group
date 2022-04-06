@@ -21,6 +21,12 @@ module "resource_group2" {
   ibmcloud_api_key    = var.ibmcloud_api_key
 }
 
+resource local_file tags {
+  filename = "${path.cwd}/.tags"
+
+  content = jsonencode(module.resource_group1.tags)
+}
+
 resource local_file provision_flag {
   filename = "${path.cwd}/.provision"
 
