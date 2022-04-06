@@ -1,12 +1,11 @@
-name: Publish metadata
+name: Notify
 
 on:
   release:
-    types:
-      - published
+    types: [published]
 
 jobs:
-  publish-assets:
-    uses: cloud-native-toolkit/action-workflows/.github/workflows/publish-metadata.yaml@v1
+  notify:
+    uses: cloud-native-toolkit/action-workflows/.github/workflows/notify.yaml@v1
     secrets:
-      TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TOKEN: ${{ secrets.TOKEN }}
