@@ -24,7 +24,7 @@ module "resource_group2" {
 resource local_file provision_flag {
   filename = "${path.cwd}/.provision"
 
-  content = module.resource_group2.provision
+  content = module.resource_group1.provision
 }
 
 resource local_file resource_group_name {
