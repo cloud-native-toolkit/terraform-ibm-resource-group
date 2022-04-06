@@ -24,6 +24,8 @@ versions:
     - name: resource_group_name
       alias: name
       scope: module
+    - name: ibmcloud_api_key
+      scope: global
     - name: sync
       moduleRef:
         id: sync
