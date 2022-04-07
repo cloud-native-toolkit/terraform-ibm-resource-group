@@ -58,3 +58,11 @@ data ibm_resource_group resource_group {
 data ibm_resource_tag resource_group_tags {
   resource_id = data.ibm_resource_group.resource_group.crn
 }
+
+module "access_groups" {
+  source = "github.com/cloud-native-toolkit/terraform-ibm-access-group"
+  count = contains(data.ibm_resource_tag.resource_group_tags.tags, local.automation_tag) ? 1 : 0
+
+  resource_group_name = data.ibm_resource_group.resource_group.name
+  provision           = true
+}
