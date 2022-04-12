@@ -25,7 +25,7 @@ module "resource_group2-parallel" {
   source = "./module"
 
   resource_group_name = "test-resource-group2"
-  sync                = module.resource_group1.sync
+  sync                = module.resource_group2.sync
   ibmcloud_api_key    = var.ibmcloud_api_key
 }
 
