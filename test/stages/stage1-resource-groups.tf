@@ -21,6 +21,14 @@ module "resource_group2" {
   ibmcloud_api_key    = var.ibmcloud_api_key
 }
 
+module "resource_group2-parallel" {
+  source = "./module"
+
+  resource_group_name = "test-resource-group2"
+  sync                = module.resource_group1.sync
+  ibmcloud_api_key    = var.ibmcloud_api_key
+}
+
 resource local_file tags {
   filename = "${path.cwd}/.tags"
 
