@@ -27,7 +27,7 @@ while true; do
 done
 
 function finish {
-  rm "${SEMAPHORE}"
+  rm -f "${SEMAPHORE}"
 }
 
 trap finish EXIT
