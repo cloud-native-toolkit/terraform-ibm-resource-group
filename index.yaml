@@ -35,6 +35,47 @@ versions:
         moduleRef:
           id: sync
           output: sync
+    version: v3.2.14
+    outputs:
+      - name: name
+        description: The name of the resource group
+      - name: id
+        description: The id of the resource group
+      - name: group
+        description: The resource group object
+      - name: sync
+        description: Value used to order the provisioning of the resource group
+      - name: provision
+        description: Flag indicating that the resource group was provisioned by this module
+      - name: tags
+        description: Flag indicating that the resource group was provisioned by this module
+  - platforms: []
+    providers:
+      - name: ibm
+        source: ibm-cloud/ibm
+    dependencies:
+      - id: sync
+        refs: []
+        interface: github.com/cloud-native-toolkit/automation-modules#sync
+        manualResolution: true
+        optional: true
+    variables:
+      - name: ibmcloud_api_key
+        type: string
+        description: The IBM Cloud api key
+        scope: global
+      - name: resource_group_name
+        type: string
+        description: The name of the resource group
+        alias: name
+        scope: module
+      - name: sync
+        type: string
+        description: Value used to order the provisioning of the resource group
+        default: ''
+        moduleRef:
+          id: sync
+          output: sync
     version: v3.2.13
     outputs:
       - name: name
