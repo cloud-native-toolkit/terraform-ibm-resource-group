@@ -43,6 +43,6 @@ if [ "$COUNT" -gt "0" ]; then
     echo "Deleted"
   fi
 else
-  echo "Resource Group Not Found"
-  exit 1;
+  echo "Resource group not found: ${RESOURCE_GROUP_NAME}" >&2
+  exit 0;
 fi
