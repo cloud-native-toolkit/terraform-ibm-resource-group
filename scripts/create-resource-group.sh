@@ -61,13 +61,14 @@ else
     --header 'Content-Type: application/json' \
     --data "$PAYLOAD")
 
-  HTTP_STATUS=$(tail -n1 <<< "$RESPONSE")  # get the last line
+  HTTP_STATUS=$(tail -n1 <<< "$RESPONSE")
   RESULT=$(sed '$ d' <<< "$RESPONSE")
 
   echo "HTTP_STATUS: $HTTP_STATUS"
   echo "RESULT: $RESULT"
 
-  if [[ HTTP_STATUS != 20* ]];
+  # if HTTP_STATUS starts with "20" (200/201), then request was successful.
+  if [[ HTTP_STATUS != "20"* ]];
   then
     echo "Resource group creation failed with HTTP Status: $HTTP_STATUS"
     exit 1
