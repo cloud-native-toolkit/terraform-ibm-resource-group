@@ -40,6 +40,25 @@ if [ "$COUNT" -gt "0" ]; then
     curl -s -X DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
       --header "Authorization: Bearer $IAM_TOKEN" \
       --header 'Content-Type: application/json'
+
+
+
+    RESPONSE=$(curl -s -w "%{http_code}" -X DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
+      --header "Authorization: Bearer $IAM_TOKEN" \
+      --header 'Content-Type: application/json')
+
+    HTTP_STATUS=$(tail -n1 <<< "$RESPONSE")  # get the last line
+    RESULT=$(sed '$ d' <<< "$RESPONSE")
+
+    echo "HTTP_STATUS: $HTTP_STATUS"
+    echo "RESULT: $RESULT"
+
+    if [[ HTTP_STATUS != 20* ]];
+    then
+      echo "Resource group deletion failed with HTTP Status: $HTTP_STATUS"
+      exit 1
+    fi
+
     echo "Deleted"
   fi
 else
