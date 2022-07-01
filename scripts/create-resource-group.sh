@@ -41,7 +41,6 @@ ACCOUNT_ID=$(curl -s -X GET 'https://iam.cloud.ibm.com/v1/apikeys/details' \
   -H 'Content-Type: application/json' | ${JQ} -r '.account_id')
 
 # check if resource group exists
-
 RESULT=$(curl -s --url "https://resource-controller.cloud.ibm.com/v2/resource_groups?account_id=$ACCOUNT_ID&name=$RESOURCE_GROUP_NAME"  \
   --header "Authorization: Bearer $IAM_TOKEN" \
   --header 'Content-Type: application/json')
@@ -57,12 +56,23 @@ else
   echo $PAYLOAD
 
   # Submit request to IAM policy service
-  RESULT=$(curl -s --request POST  --url https://resource-controller.cloud.ibm.com/v2/resource_groups  \
+  RESPONSE=$(curl -s -w "\n%{http_code}" --request POST  --url https://resource-controller.cloud.ibm.com/v2/resource_groups  \
     --header "Authorization: Bearer $IAM_TOKEN" \
     --header 'Content-Type: application/json' \
     --data "$PAYLOAD")
 
-  echo $RESULT
+  HTTP_STATUS=$(tail -n1 <<< "$RESPONSE")
+  RESULT=$(sed '$ d' <<< "$RESPONSE")
+
+  echo "HTTP_STATUS: $HTTP_STATUS"
+  echo "RESULT: $RESULT"
+
+  # if HTTP_STATUS starts with "20" (200/201), then request was successful.
+  if [[ $HTTP_STATUS != "20"* ]];
+  then
+    echo "Resource group creation failed with HTTP Status: $HTTP_STATUS"
+    exit 1
+  fi
 
   RESOURCE_CRN=$(echo $RESULT | jq '.crn' -r)
 

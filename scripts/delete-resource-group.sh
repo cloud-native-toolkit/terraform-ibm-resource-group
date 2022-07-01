@@ -37,9 +37,23 @@ if [ "$COUNT" -gt "0" ]; then
   if [[ "$TAGS" == *"$AUTOMATION_TAG"* ]]; then
     echo "Found automation tag: $AUTOMATION_TAG. Deleting resource group $RG_ID..."
 
-    curl -s -X DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
+    RESPONSE=$(curl -s -w "\n%{http_code}" -X DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
       --header "Authorization: Bearer $IAM_TOKEN" \
-      --header 'Content-Type: application/json'
+      --header 'Content-Type: application/json')
+
+    HTTP_STATUS=$(tail -n1 <<< "$RESPONSE")
+    RESULT=$(sed '$ d' <<< "$RESPONSE")
+
+    echo "HTTP_STATUS: $HTTP_STATUS"
+    echo "RESULT: $RESULT"
+
+    # if HTTP_STATUS starts with "20" (200/201), then request was successful.
+    if [[ $HTTP_STATUS != "20"* ]];
+    then
+      echo "Resource group deletion failed with HTTP Status: $HTTP_STATUS"
+      exit 1
+    fi
+
     echo "Deleted"
   fi
 else
