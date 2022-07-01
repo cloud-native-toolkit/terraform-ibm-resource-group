@@ -56,7 +56,7 @@ else
   echo $PAYLOAD
 
   # Submit request to IAM policy service
-  RESPONSE=$(curl -s -w "%{http_code}" --request POST  --url https://resource-controller.cloud.ibm.com/v2/resource_groups  \
+  RESPONSE=$(curl -s -w "\n%{http_code}" --request POST  --url https://resource-controller.cloud.ibm.com/v2/resource_groups  \
     --header "Authorization: Bearer $IAM_TOKEN" \
     --header 'Content-Type: application/json' \
     --data "$PAYLOAD")
