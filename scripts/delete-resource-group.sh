@@ -48,7 +48,7 @@ if [ "$COUNT" -gt "0" ]; then
     echo "RESULT: $RESULT"
 
     # if HTTP_STATUS starts with "20" (200/201), then request was successful.
-    if [[ HTTP_STATUS != "20"* ]];
+    if [[ $HTTP_STATUS != "20"* ]];
     then
       echo "Resource group deletion failed with HTTP Status: $HTTP_STATUS"
       exit 1
