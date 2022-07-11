@@ -11,14 +11,16 @@ module "resource_group1" {
   resource_group_name = "test-resource-group1"
   ibmcloud_api_key    = var.ibmcloud_api_key
   sync                = module.existing_resource_group.sync
+  purge_volumes = true
 }
 
 module "resource_group2" {
   source = "./module"
 
-  resource_group_name = "test-resource-group2"
+  resource_group_name = "test-resource-group2a"
   sync                = module.resource_group1.sync
   ibmcloud_api_key    = var.ibmcloud_api_key
+  purge_volumes = true
 }
 
 module "resource_group2-parallel" {

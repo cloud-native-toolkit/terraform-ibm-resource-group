@@ -13,3 +13,9 @@ variable "sync" {
   description = "Value used to order the provisioning of the resource group"
   default     = ""
 }
+
+variable "purge_volumes" {
+  type        = bool
+  description = "Flag indicating that any volumes in the resource group should be automatically destroyed before destroying the resource group. If volumes exist and the flag is false then the destroy will fail."
+  default     = false
+}

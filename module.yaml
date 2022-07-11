@@ -30,3 +30,5 @@ versions:
       moduleRef:
         id: sync
         output: sync
+    - name: purge_volumes
+      scope: global

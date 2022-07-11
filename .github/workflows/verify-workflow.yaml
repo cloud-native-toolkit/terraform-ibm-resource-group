@@ -18,13 +18,17 @@ jobs:
   verify:
     if: ${{ !contains( github.event.pull_request.labels.*.name, 'skip ci' ) }}
     runs-on: ubuntu-latest
-    container: quay.io/ibmgaragecloud/cli-tools:v0.15
+    container: quay.io/cloudnativetoolkit/terraform:v1.2
 
     strategy:
       matrix:
         testcase:
           - ocp4_latest
+        volumes:
+          - create
+          - no create
       fail-fast: false
+      max-parallel: 1
 
     env:
       HOME: /home/devops
@@ -34,6 +38,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - id: variables
+        name: Set up variables
+        env:
+          GIT_ORG: ${{ secrets.GIT_ORG }}
+          GITU_CONFIG: ${{ secrets.GITU_CONFIG }}
+          GIT_PROJECT: ${{ secrets.GIT_PROJECT }}
+        shell: bash
+        run: |
+          if [[ "${{ matrix.volumes }}" == "create" ]]; then
+            CREATE_VOLUME="true"
+          else
+            CREATE_VOLUME="false"
+          fi
+          
+          echo "Create volume: ${CREATE_VOLUME}"
+          echo "::set-output name=create_volume::$CREATE_VOLUME"
+
       - name: Verify deploy on ${{ matrix.testcase }}
         uses: cloud-native-toolkit/action-module-verify-deploy@main
         with:
@@ -42,6 +63,7 @@ jobs:
         env:
           TF_VAR_ibmcloud_api_key: ${{ secrets.IBMCLOUD_API_KEY }}
           IBMCLOUD_API_KEY: ${{ secrets.IBMCLOUD_API_KEY }}
+          TF_VAR_create_volume: ${{ steps.variables.outputs.create_volume }}
 
       - name: Verify destroy on ${{ matrix.testcase }}
         uses: cloud-native-toolkit/action-module-verify-destroy@main
@@ -51,3 +73,4 @@ jobs:
         env:
           TF_VAR_ibmcloud_api_key: ${{ secrets.IBMCLOUD_API_KEY }}
           IBMCLOUD_API_KEY: ${{ secrets.IBMCLOUD_API_KEY }}
+          TF_VAR_create_volume: ${{ steps.variables.outputs.create_volume }}

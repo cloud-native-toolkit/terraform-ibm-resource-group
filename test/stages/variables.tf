@@ -15,3 +15,13 @@ variable "resource_group_provision" {
   description = "Flag indicating that the resource group should be provisioned"
   default     = true
 }
+
+variable "region" {
+  type    = string
+  default = "us-east"
+}
+
+variable "create_volume" {
+  type    = string
+  default = "false"
+}
