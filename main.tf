@@ -12,7 +12,6 @@ resource null_resource wait_for_sync {
 
 module "clis" {
   source = "cloud-native-toolkit/clis/util"
-  version = "1.16.2"
 }
 
 resource "random_uuid" "tag" {
