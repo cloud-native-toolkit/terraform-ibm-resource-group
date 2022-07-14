@@ -17,7 +17,6 @@ data ibm_resource_group resource_group {
 
 module "clis" {
   source = "cloud-native-toolkit/clis/util"
-  version = "1.16.2"
 }
 
 resource random_string volume_id {
