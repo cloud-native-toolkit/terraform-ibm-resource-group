@@ -8,9 +8,13 @@ if [[ -z "${RESOURCE_GROUP_NAME}" ]] || [[ -z "${PURGE}" ]]; then
   exit 1
 fi
 
-if [[ -z "${IBMCLOUD_API_KEY}" ]]; then
-  echo "IBMCLOUD_API_KEY must be provided as an environment variable" >&2
+if [[ -z "${IBMCLOUD_API_KEY}" ]] && [[ -z "${TF_VAR_ibmcloud_api_key}" ]]; then
+  echo "IBMCLOUD_API_KEY or TF_VAR_ibmcloud_api_key must be provided as an environment variable" >&2
   exit 1
+fi
+
+if [[ -z "${IBMCLOUD_API_KEY}" ]]; then
+  export TF_VAR_ibmcloud_api_key="${IBMCLOUD_API_KEY}"
 fi
 
 if [[ -n "${BIN_DIR}" ]]; then
@@ -21,6 +25,11 @@ if ! command -v jq 1> /dev/null 2> /dev/null; then
   echo "jq cli not found" >&2
   exit 1
 fi
+
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+WHITE='\033[0;37m'
+NC='\033[0m'
 
 IAM_TOKEN=$(curl -s -X POST "https://iam.cloud.ibm.com/identity/token" \
   -H "Content-Type: application/x-www-form-urlencoded" \
@@ -130,7 +139,7 @@ else
   else
     echo "${volume_count} volumes found in the resource group and purge_volumes is not set to true." >&2
   fi
-  echo "  Manually clean up the volumes or re-run destroy with purge_volumes set to true." >&2
+  echo -e "  Manually clean up the volumes with the following - ${WHITE}purge-volumes.sh ${RESOURCE_GROUP_NAME} true${NC}" >&2
 
   exit 1
 fi
