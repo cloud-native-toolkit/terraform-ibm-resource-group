@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
+
 RESOURCE_GROUP_NAME="$1"
 PURGE="$2"
 
@@ -14,7 +16,7 @@ if [[ -z "${IBMCLOUD_API_KEY}" ]] && [[ -z "${TF_VAR_ibmcloud_api_key}" ]]; then
 fi
 
 if [[ -z "${IBMCLOUD_API_KEY}" ]]; then
-  export TF_VAR_ibmcloud_api_key="${IBMCLOUD_API_KEY}"
+  export IBMCLOUD_API_KEY="${TF_VAR_ibmcloud_api_key}"
 fi
 
 if [[ -n "${BIN_DIR}" ]]; then
@@ -139,7 +141,7 @@ else
   else
     echo "${volume_count} volumes found in the resource group and purge_volumes is not set to true." >&2
   fi
-  echo -e "  Manually clean up the volumes with the following - ${WHITE}purge-volumes.sh ${RESOURCE_GROUP_NAME} true${NC}" >&2
+  echo -e "  Manually clean up the volumes with the following - ${WHITE}${SCRIPT_DIR}/purge-volumes.sh ${RESOURCE_GROUP_NAME} true${NC}" >&2
 
   exit 1
 fi
