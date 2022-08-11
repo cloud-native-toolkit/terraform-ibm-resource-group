@@ -47,19 +47,31 @@ TAGS=$(curl -s -X GET \
 if [[ "$TAGS" == *"$AUTOMATION_TAG"* ]]; then
   echo "Found automation tag: $AUTOMATION_TAG. Deleting resource group $RG_ID..."
 
-  RESPONSE=$(curl -s -w "\n%{http_code}" -X DELETE https://resource-controller.cloud.ibm.com/v2/resource_groups/$RG_ID \
-    --header "Authorization: Bearer $IAM_TOKEN" \
+  count=0
+  RESPONSE=$(curl -s -w "\n%{http_code}" -X DELETE "https://resource-controller.cloud.ibm.com/v2/resource_groups/${RG_ID}" \
+    --header "Authorization: Bearer ${IAM_TOKEN}" \
     --header 'Content-Type: application/json')
 
   HTTP_STATUS=$(tail -n1 <<< "$RESPONSE")
-  RESULT=$(sed '$ d' <<< "$RESPONSE")
 
-  echo "HTTP_STATUS: $HTTP_STATUS"
-  echo "RESULT: $RESULT"
+  until [[ $HTTP_STATUS == "20"* ]] || [[ $count -eq 20 ]]; do
+    echo "  Delete failed. Sleeping for 30 seconds"
+    count=$((count + 1))
+    sleep 30
+
+    RESPONSE=$(curl -s -w "\n%{http_code}" -X DELETE "https://resource-controller.cloud.ibm.com/v2/resource_groups/${RG_ID}" \
+      --header "Authorization: Bearer ${IAM_TOKEN}" \
+      --header 'Content-Type: application/json')
+
+    HTTP_STATUS=$(tail -n1 <<< "$RESPONSE")
+    RESULT=$(sed '$ d' <<< "$RESPONSE")
+
+    echo "    HTTP_STATUS: $HTTP_STATUS"
+    echo "    RESULT: $RESULT"
+  done
 
   # if HTTP_STATUS starts with "20" (200/201), then request was successful.
-  if [[ $HTTP_STATUS != "20"* ]];
-  then
+  if [[ $HTTP_STATUS != "20"* ]]; then
     echo "Resource group deletion failed with HTTP Status: $HTTP_STATUS"
     exit 1
   fi
