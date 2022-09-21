@@ -10,21 +10,20 @@ resource null_resource wait_for_sync {
   }
 }
 
-module "clis" {
-  source = "cloud-native-toolkit/clis/util"
+data clis_check clis {
 }
 
 resource "random_uuid" "tag" {
 }
 
 resource null_resource resource_group {
-  depends_on = [null_resource.wait_for_sync, module.clis]
+  depends_on = [null_resource.wait_for_sync]
 
   triggers = {
     IBMCLOUD_API_KEY = base64encode(var.ibmcloud_api_key)
     RESOURCE_GROUP_NAME  = var.resource_group_name
     AUTOMATION_TAG  = local.automation_tag
-    BIN_DIR = module.clis.bin_dir
+    BIN_DIR = data.clis_check.clis.bin_dir
   }
 
   provisioner "local-exec" {
@@ -68,7 +67,7 @@ resource null_resource volumes {
     purge_volumes       = var.purge_volumes
     automation_tag      = local.automation_tag
     ibmcloud_api_key    = var.ibmcloud_api_key
-    bin_dir             = module.clis.bin_dir
+    bin_dir             = data.clis_check.clis.bin_dir
     tmp_dir             = local.tmp_dir
   }
 
