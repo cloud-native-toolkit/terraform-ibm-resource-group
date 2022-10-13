@@ -1875,4 +1875,3 @@ versions:
         description: 'output" #  value       = "value" #  depends_on  = [<some resource>] #}'
 interfaces:
   - github.com/cloud-native-toolkit/automation-modules#sync
-registryId: cloud-native-toolkit/resource-group/ibm
