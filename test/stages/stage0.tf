@@ -1,15 +1,20 @@
 terraform {
+  required_providers {
+    ibm = {
+      source = "ibm-cloud/ibm"
+    }
+    clis = {
+      source = "cloud-native-toolkit/clis"
+    }
+  }
 }
 
-module setup_clis {
-  source = "github.com/cloud-native-toolkit/terraform-util-clis.git"
-
-  bin_dir = "${path.cwd}/test_bin_dir"
+data clis_check clis {
   clis = ["ibmcloud"]
 }
 
 resource local_file bin_dir {
   filename = "${path.cwd}/.bin_dir"
 
-  content = module.setup_clis.bin_dir
+  content = data.clis_check.clis.bin_dir
 }
